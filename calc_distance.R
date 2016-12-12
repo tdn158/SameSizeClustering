@@ -1,3 +1,5 @@
+# Distance function that takes curvature of earth into account
+
 calc_dist <- function(fr, to) {
   lat1 = fr$lat * (pi/180)
   lon1 = fr$lon * (pi/180)
