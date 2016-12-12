@@ -1,14 +1,15 @@
 SameSizeClusters <- function(orig.data, k=5, max.iter =50, tolerance = 1, plot.iter=FALSE) {
   
+  #### Source: http://statistical-research.com/page/3/  
   #### This is a function that takes a dataframe with lat / lon 
-  #### (must be named 'lat' and 'lon') coordinates and
+  #### (must be named 'y' and 'x' respectively) coordinates and
   #### 1. Initializes groups of size at most k
   #### 2. Minimizes distance between the groups by
   ###### a. For every observation, the closest cluster center is found (k_take). 
   ######    This observation now belongs to this cluster (k_take).
   ###### b. The cluster that gave the observation (k_give) receives the observation
   ######    closest to its center from k_take
-  ###### c. This is repeated until convergence or max.iter is reached
+  ###### c. This is repeated for every obs multiple times until convergence or max.iter is reached
   
   fr = to = NULL
   
