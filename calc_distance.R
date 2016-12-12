@@ -1,4 +1,4 @@
-calc_dist = function(fr, to) {
+calc_dist <- function(fr, to) {
   lat1 = fr$lat * (pi/180)
   lon1 = fr$lon * (pi/180)
   lat2 = to$lat * (pi/180)
