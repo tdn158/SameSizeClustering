@@ -11,7 +11,27 @@ in which the starting seeds are very far apart.
 
 Additionally, this can allow for parallelization of the algorithm (although this isn't supported at this time).
 
+# Example Usage
 
 ```R
-x <- sample(nrow(data), 500)
+# Generate sample data
+sample_data_chicago_distribution <- function(Mu1, Sigma1, Mu2, Sigma2, n1, n2) {
+  library(MASS)
+  dist1 <- data.frame(mvrnorm(n = n1, Mu1, Sigma1))
+  names(dist1) <- c("y", "x")
+  dist2 <- data.frame(mvrnorm(n = n2, Mu2, Sigma2))
+  names(dist2) <- c("y", "x")
+  dist <- rbind(dist1, dist2)
+  dist$UserID <- 1:length(dist$x)
+  return(dist)
+}
+
+sample_data_users_chicago <- sample_data_chicago_users(c(41.855970, -87.68684), 
+                              matrix(c(0.01125,-0.005,-.005,0.002975),2,2), 
+                              c(41.855970, -87.76684),
+                              matrix(c(0.003,0,-0.08,0.003),2,2),
+                              ceiling(.7*2000),
+                              ceiling(.3*2000))
+
+distance_clustered_data <- SameSizeClustering(sample_data_users_chicago)
 ```
