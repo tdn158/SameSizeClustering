@@ -10,3 +10,8 @@ into subgroups. This reduces distance between points by significantly decreasing
 in which the starting seeds are very far apart.
 
 Additionally, this can allow for parallelization of the algorithm (although this isn't supported at this time).
+
+
+```R
+x <- sample(nrow(data), 500)
+```
