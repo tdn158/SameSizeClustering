@@ -24,7 +24,7 @@ SameSizeClusters <- function(orig.data, group_size=5, max.iter =50, tolerance = 
     stop('packages [dplyr] are required for this function')
   }
   if (!("x" %in% names(orig.data) && "y" %in% names(orig.data) && "UserID" %in% names(orig.data))) {
-    stop('requires latitude column named "y", longitude column named "x", and an ID column named "UserID"')
+    stop('requires lat column named "y", long column named "x", and an ID column named "UserID"')
   }
       
   # Letters needed for cluster key, a measure of data integrity
@@ -71,14 +71,14 @@ SameSizeClusters <- function(orig.data, group_size=5, max.iter =50, tolerance = 
     ## Calc centers and merge
     mu = cbind( by(tmp.data$y, tmp.data$cluster, mean), by(tmp.data$x, tmp.data$cluster, mean), seq(1:number_groups) )
     tmp1 = matrix( match(tmp.data$cluster, mu[,3]) )
-    orig.data.centers = cbind(as.matrix(tmp.data), mu[tmp1,])
+    orig.data.centers = as.data.frame(cbind(as.matrix(tmp.data), mu[tmp1,]))
     
     ## Calc initial distance from centers
-    fr$lat = as.numeric(orig.data.centers[,ncol(orig.data.centers)-2])
-    fr$lon = as.numeric(orig.data.centers[,ncol(orig.data.centers)-1])
+    fr$lat = as.numeric(as.character(orig.data.centers[,ncol(orig.data.centers)-2]))
+    fr$lon = as.numeric(as.character(orig.data.centers[,ncol(orig.data.centers)-1]))
     fr <- as.data.frame(fr)
-    to$lat = as.numeric(orig.data.centers[,1])
-    to$lon = as.numeric(orig.data.centers[,2])
+    to$lat = as.numeric(as.matrix(dplyr::select(orig.data.centers, y)))
+    to$lon = as.numeric(as.matrix(dplyr::select(orig.data.centers, x)))
     to <- as.data.frame(to)
     tmp.data$distance.from.center = calc_dist(fr, to)$distance_miles
     tmp.data$distance.from.center_original = tmp.data$distance.from.center
@@ -133,15 +133,15 @@ SameSizeClusters <- function(orig.data, group_size=5, max.iter =50, tolerance = 
       # Calculate new cluster means
       mu = cbind( by(tmp.data$y, tmp.data$cluster, mean), by(tmp.data$x, tmp.data$cluster, mean), seq(1:number_groups) )
       tmp1 = matrix( match(tmp.data$cluster, mu[,3]) )
-      orig.data.centers = cbind(as.matrix(tmp.data), mu[tmp1,])
+      orig.data.centers = as.data.frame(cbind(as.matrix(tmp.data), mu[tmp1,]))
       mu = cbind( by(tmp.data$y, tmp.data$cluster, mean), by(tmp.data$x, tmp.data$cluster, mean), seq(1:number_groups) )
       
       ## Calc initial distance from centers
-      fr$lat = as.numeric(orig.data.centers[,ncol(orig.data.centers)-2]) 
-      fr$lon = as.numeric(orig.data.centers[,ncol(orig.data.centers)-1])
+      fr$lat = as.numeric(as.character(orig.data.centers[,ncol(orig.data.centers)-2]))
+      fr$lon = as.numeric(as.character(orig.data.centers[,ncol(orig.data.centers)-1]))
       fr <- as.data.frame(fr)
-      to$lat = as.numeric(orig.data.centers[,1])
-      to$lon = as.numeric(orig.data.centers[,2])
+      to$lat = as.numeric(as.matrix(dplyr::select(orig.data.centers, y)))
+      to$lon = as.numeric(as.matrix(dplyr::select(orig.data.centers, x)))
       to <- as.data.frame(to)
       tmp.data$distance.from.center = calc_dist(fr, to)$distance_miles
       
@@ -166,6 +166,11 @@ SameSizeClusters <- function(orig.data, group_size=5, max.iter =50, tolerance = 
   
     return(tmp.data.bind)
 }
+  
+
+
+
+
   
 
 
