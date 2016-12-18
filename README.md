@@ -36,7 +36,7 @@ sample_data_distribution <- function(Mu1, Sigma1, Mu2, Sigma2, n1, n2) {
 
 # Generate sample data to replicate pop distribution of Chicago
 
-sample_data_users_chicago <- sample_data_chicago_users(c(41.855970, -87.68684), 
+sample_data_users_chicago <- sample_data_distribution(c(41.855970, -87.68684), 
                               matrix(c(0.01125,-0.005,-.005,0.002975),2,2), 
                               c(41.855970, -87.76684),
                               matrix(c(0.003,0,-0.08,0.003),2,2),
