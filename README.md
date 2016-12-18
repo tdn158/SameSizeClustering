@@ -52,7 +52,7 @@ head(sample_data_users_chicago)
 
 distance_clustered_data <- SameSizeClustering(sample_data_users_chicago)
 
-head(sample_data_users_chicago)
+head(distance_clustered_data)
 
 ###     y            x          UserID         BigCluster     subCluster      clusterOriginal    distance.from.center
 ### 1   41.75815      -87.64354      1              1           39               26                0.2726409
